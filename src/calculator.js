@@ -70,7 +70,14 @@ class Calculator extends Component {
     }
 
     _handleNumberInput(num) {
-        let inputValue = (this.state.inputValue * 10) + num;
+        let inputValue;
+        const isSymbolSelected = this.state.selectedSymbol;
+        const selectedInputValue = this.state.inputValue;
+        if (!isSymbolSelected && selectedInputValue !== 0) {
+          inputValue = `${selectedInputValue}${num}`;
+        } else {
+          inputValue = num;
+        }
 
         this.setState({
             inputValue: inputValue
@@ -86,7 +93,6 @@ class Calculator extends Component {
                 this.setState({
                     selectedSymbol: str,
                     previousInputValue: this.state.inputValue,
-                    inputValue: 0
                 });
                 break;
 
