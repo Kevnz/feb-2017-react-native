@@ -22,6 +22,7 @@ class Calculator extends Component {
         super(props);
 
         this.initialState = {
+            resetInput: false,
             previousInputValue: 0,
             inputValue: 0,
             selectedSymbol: null
@@ -71,16 +72,18 @@ class Calculator extends Component {
 
     _handleNumberInput(num) {
         let inputValue;
-        const isSymbolSelected = this.state.selectedSymbol;
+        let resetInput = this.state.resetInput;
         const selectedInputValue = this.state.inputValue;
-        if (!isSymbolSelected && selectedInputValue !== 0) {
+        if (!resetInput && selectedInputValue !== 0) {
           inputValue = `${selectedInputValue}${num}`;
         } else {
+          resetInput = false;
           inputValue = num;
         }
 
         this.setState({
-            inputValue: inputValue
+            inputValue: inputValue,
+            resetInput: resetInput
         });
     }
 
@@ -92,6 +95,7 @@ class Calculator extends Component {
             case '-':
                 this.setState({
                     selectedSymbol: str,
+                    resetInput: true,
                     previousInputValue: this.state.inputValue,
                 });
                 break;
